@@ -26,9 +26,50 @@ void findStudentById() {
     else    cout << "Student not found.\n";
 }
 
+void findStudent() {
+    int option;
+    cout << "Search by: 1. ID  2. Name\n";
+    cin >> option;
+    cin.ignore();
+
+    if (option == 1) {
+        int id;
+        cout << "Enter student ID: ";
+        cin >> id;
+        Student* st = studentList.searchById(id);
+        if (st) st->display();
+        else    cout << "Student not found.\n";
+    } 
+    else if (option == 2) {
+        string name;
+        cout << "Enter student name: ";
+        getline(cin, name);
+        studentList.searchByName(name);
+    }
+    else {
+        cout << "Invalid option.\n";
+    }
+}
+
+
+
 void displayAll() {
     cout << "All students:\n";
     studentList.displayAll();
+}
+
+void removeStudentById() {
+    int id;
+    cout << "Enter student ID to remove: ";
+    cin >> id;
+    if (studentList.removeById(id)) {
+        cout << "Student removed successfully.\n";
+    } else {
+        cout << "Student not found.\n";
+    }
+}
+
+void createCourse() {
 }
 
 void showMenu() {
@@ -80,11 +121,11 @@ void runMenu() {
         }
         else if (option == 2) {
             cout << "=== FIND STUDENT ===" << endl;
-            findStudentById();
+            findStudent();
         }
         else if (option == 3) {
             cout << "=== REMOVE STUDENT ===" << endl;
-            // function to remove student
+            removeStudentById();
         }
         else if (option == 4) {
             cout << "=== CREATE COURSE ===" << endl;
@@ -113,7 +154,6 @@ void runMenu() {
         else if (option == 10) {
             cout << "=== GET ALL STUDENTS ===" << endl;
             displayAll();
-            break;
         }
         else if (option == 11) {
             cout << "=== GET COURSES FROM STUDENT ===" << endl;

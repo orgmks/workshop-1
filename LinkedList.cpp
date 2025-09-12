@@ -1,5 +1,8 @@
 #include "LinkedList.h"
 #include <iostream>
+#include <vector>
+
+using namespace std;
 
 template <typename T>
 LinkedList<T>::LinkedList() 
@@ -44,14 +47,19 @@ T* LinkedList<T>::searchById(int id) {
 }
 
 template <typename T>
-T* LinkedList<T>::searchByName(const std::string& name) {
-    for (Node* cur = head; cur; cur = cur->next) {
+void LinkedList<T>::searchByName(const std::string& name) const {
+    bool found = false;
+    for (const Node* cur = head; cur; cur = cur->next) {
         if (cur->data.getName() == name) {
-            return &cur->data;
+            cur->data.display();
+            found = true;
         }
     }
-    return nullptr;
+    if (!found) {
+        std::cout << "No student found with that name.\n";
+    }
 }
+
 
 template <typename T>
 bool LinkedList<T>::removeById(int id) {

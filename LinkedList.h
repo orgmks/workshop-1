@@ -20,7 +20,7 @@ public:
 
     void insertAtEnd(T value);
     T* searchById(int id);
-    T* searchByName(const std::string& name);
+    void searchByName(const std::string& name) const;
     bool removeById(int id);
     void displayAll() const;
     bool isEmpty() const;
