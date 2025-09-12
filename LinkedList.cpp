@@ -1,6 +1,7 @@
 #include "LinkedList.h"
 #include <iostream>
 #include <vector>
+#include "Subject.h"
 
 using namespace std;
 
@@ -109,5 +110,35 @@ int LinkedList<T>::getSize() const {
 }
 
 
+template<typename T>
+bool LinkedList <T>::insert(const T& student){
+    if(exists(student.getId())){
+        return false;
+    }
+    insertAtEnd(student);
+    return true;
+}
+
+template<typename T>
+bool LinkedList<T>::remove(int id){
+    return removeById(id);
+}
+
+template<typename T>
+bool LinkedList<T>::exists(int id) const{
+    for(Node* cur = head ; cur ; cur = cur -> next){
+        if(cur -> data.getId() == id){
+            return true;
+        }
+    }
+    return false;
+}
+
+template<typename T>
+void LinkedList<T>::display() const{
+    displayAll();
+}
+
 #include "Student.h"
 template class LinkedList<Student>;
+template class LinkedList<Subject>;

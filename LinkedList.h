@@ -2,6 +2,7 @@
 #define LINKEDLIST_H
 
 #include <string>
+#include <iostream>
 
 template <typename T>
 class LinkedList {
@@ -25,6 +26,11 @@ public:
     void displayAll() const;
     bool isEmpty() const;
     int getSize() const;
+    bool insert(const T& student);
+    bool remove(int id);
+    bool exists(int id) const;
+    void display() const;
 };
 
 #endif
+
