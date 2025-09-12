@@ -1,5 +1,7 @@
-#include <iostream>
-using namespace std;
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
+#include <string>
 
 template <typename T>
 class LinkedList {
@@ -7,19 +9,22 @@ private:
     struct Node {
         T data;
         Node* next;
-        Node(const T& value) : data(value), next(nullptr) {}
+        explicit Node(const T& value) : data(value), next(nullptr) {}
     };
-
     Node* head;
     int size;
+
 public:
-    LinkedList(); 
+    LinkedList();
     ~LinkedList();
+
     void insertAtEnd(T value);
     T* searchById(int id);
-    T* searchByName(string name);
+    T* searchByName(const std::string& name);
     bool removeById(int id);
-    void displayAll();
-    bool isEmpty();
-    int getSize();
+    void displayAll() const;
+    bool isEmpty() const;
+    int getSize() const;
 };
+
+#endif

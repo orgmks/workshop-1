@@ -2,23 +2,20 @@
 #define STUDENT_H
 
 #include <string>
-using namespace std;
+#include <iostream>
 
-class Student
-{
+class Student {
 private:
     int id;
-    string nombre;
+    std::string name;
+
 public:
-    Student(); //default constructor
-    ~Student(); 
-    Student(int id, const string& name);
-
-    int getID() const;
-    string getName() const;
+    Student();
+    Student(int id, const std::string& name);
+    ~Student() = default;         
+    int getId() const;
+    std::string getName() const;
     void display() const;
-
-    
 };
 
 #endif

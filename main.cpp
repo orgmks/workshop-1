@@ -9,39 +9,25 @@ LinkedList<Student> studentList; // General list of students
 using namespace std;
 
 void createStudent() {
-    int id;
-    string name;
-
-    cout << "Enter student ID: ";
-    cin >> id;
-    cin.ignore();
-
-    cout << "Enter student name: ";
-    getline(cin,name);
-
-    Student s(id,name);
+    int id; string name;
+    cout << "Enter student ID: ";  cin >> id;  cin.ignore();
+    cout << "Enter student name: "; getline(cin, name);
+    Student s(id, name);
     studentList.insertAtEnd(s);
-
-    cout << "Student already created and added" << endl;
+    cout << "Student created and added.\n";
 }
 
-void findStudentById(){
+void findStudentById() {
     int id;
     cout << "Enter student ID you are looking for: ";
     cin >> id;
-
-    Student* student = studentList.searchById(id);
-    if (student)
-    {
-        student -> display();
-    } else {
-        cout << "Student not found." << endl;
-    }
-    
+    Student* st = studentList.searchById(id);
+    if (st) st->display();
+    else    cout << "Student not found.\n";
 }
 
-void displayAll(){
-    cout << "Displaying all Student" << endl;
+void displayAll() {
+    cout << "All students:\n";
     studentList.displayAll();
 }
 
@@ -77,14 +63,15 @@ void showMenu() {
 
     cout << "0. Exit" << endl;
     cout << "===================================" << endl;
-    cout << "Select an option: ";
 }
 
 void runMenu() {
     int option = -1;
+    showMenu();
     
     while (option != 0) {
-        showMenu();
+        cout << endl;
+        cout << "Select an option: ";
         cin >> option;
 
         if (option == 1) {
