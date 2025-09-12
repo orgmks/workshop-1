@@ -1,7 +1,49 @@
 #include <iostream>
 #include <string>
+#include "Student.h"
+#include "LinkedList.h"
+
+LinkedList<Student> studentList; // General list of students
+
 
 using namespace std;
+
+void createStudent() {
+    int id;
+    string name;
+
+    cout << "Enter student ID: ";
+    cin >> id;
+    cin.ignore();
+
+    cout << "Enter student name: ";
+    getline(cin,name);
+
+    Student s(id,name);
+    studentList.insertAtEnd(s);
+
+    cout << "Student already created and added" << endl;
+}
+
+void findStudentById(){
+    int id;
+    cout << "Enter student ID you are looking for: ";
+    cin >> id;
+
+    Student* student = studentList.searchById(id);
+    if (student)
+    {
+        student -> display();
+    } else {
+        cout << "Student not found." << endl;
+    }
+    
+}
+
+void displayAll(){
+    cout << "Displaying all Student" << endl;
+    studentList.displayAll();
+}
 
 void showMenu() {
     cout << "=== ACADEMIC MANAGEMENT SYSTEM ===" << endl;
@@ -47,11 +89,11 @@ void runMenu() {
 
         if (option == 1) {
             cout << "=== CREATE STUDENT ===" << endl;
-            // function to create student
+            createStudent();
         }
         else if (option == 2) {
             cout << "=== FIND STUDENT ===" << endl;
-            // function to find student
+            findStudentById();
         }
         else if (option == 3) {
             cout << "=== REMOVE STUDENT ===" << endl;
@@ -83,7 +125,8 @@ void runMenu() {
         }
         else if (option == 10) {
             cout << "=== GET ALL STUDENTS ===" << endl;
-            // function to get all students
+            displayAll();
+            break;
         }
         else if (option == 11) {
             cout << "=== GET COURSES FROM STUDENT ===" << endl;

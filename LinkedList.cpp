@@ -29,3 +29,4 @@ void LinkedList<T>::insertAtEnd(T value) {
     current->next = newNode;
     size++;
 }
+
