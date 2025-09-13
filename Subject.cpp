@@ -24,6 +24,8 @@ bool Subject::removeStudentFromSubject(int studentID){
     return registered.remove(studentID);
 }
 
-void Subject::display() const{
-    registered.display();
+void Subject::display() const {
+    std::cout << "Subject: " << code << " - " << name << '\n';
+    std::cout << "Enrolled students (" << registered.getSize() << "):\n";
+    registered.displayAll();
 }

@@ -6,8 +6,8 @@
 using namespace std;
 
 template <typename T>
-LinkedList<T>::LinkedList() 
-    : head(nullptr), size(0) {}
+LinkedList<T>::LinkedList() : 
+    head(nullptr), size(0) {}
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
@@ -57,7 +57,7 @@ void LinkedList<T>::searchByName(const std::string& name) const {
         }
     }
     if (!found) {
-        std::cout << "No student found with that name.\n";
+        cout << "No student found with that name.\n";
     }
 }
 
@@ -65,7 +65,6 @@ void LinkedList<T>::searchByName(const std::string& name) const {
 template <typename T>
 bool LinkedList<T>::removeById(int id) {
     if (!head) return false;
-
     if (head->data.getId() == id) {
         Node* temp = head;
         head = head->next;
@@ -90,7 +89,7 @@ bool LinkedList<T>::removeById(int id) {
 template <typename T>
 void LinkedList<T>::displayAll() const {
     if (!head) {
-        std::cout << "The list is empty.\n";
+        cout << "The list is empty.\n";
         return;
     }
 
@@ -108,7 +107,6 @@ template <typename T>
 int LinkedList<T>::getSize() const {
     return size;
 }
-
 
 template<typename T>
 bool LinkedList <T>::insert(const T& student){
@@ -138,6 +136,7 @@ template<typename T>
 void LinkedList<T>::display() const{
     displayAll();
 }
+
 
 #include "Student.h"
 template class LinkedList<Student>;

@@ -6,21 +6,87 @@
 
 LinkedList<Student> studentList; // General list of students
 LinkedList<Subject> subjectList; // General List of Subjects
- 
+
+
 using namespace std;
+
+void removeSubjectById() {
+    int code;
+    cout << "Enter Subject ID (code) to remove: ";
+    cin >> code;
+    cin.ignore();
+
+    if (subjectList.removeById(code)) {
+        cout << "Subject removed successfully.\n";
+    } else {
+        cout << "Subject not found.\n";
+    }
+}
+
 
 void createSubject(){
     int code; string name;
-    cout << "Enter Subject code: "; 
-    cin >> code ; cin.ignore();
-    cout << "Enter Subject name: "; 
-    getline(cin,name);
+    cout << "Enter Subject code: ";
+    cin >> code; 
+    cin.ignore();
 
-    Subject c(name,code);
+    if (subjectList.exists(code)) {
+        cout << "Error: A subject with this code already exists.\n";
+        return;
+    }
+
+    cout << "Enter Subject name: ";
+    getline(cin, name);
+
+    Subject c(name, code);
     subjectList.insertAtEnd(c);
     cout << "Subject Created and added.\n";
-
 }
+
+
+void findSubject(){
+    int opt;
+    cout << "Search subject by: 1) Code  2) Name\n";
+    cin >> opt;
+    cin.ignore();
+
+    if (opt == 1) {
+        int code;
+        cout << "Enter Subject Code you are looking for: ";
+        cin >> code;
+        cin.ignore();
+
+        Subject* sj = subjectList.searchById(code);
+        if (sj) {
+            cout << "== SUBJECT FOUND ==\n";
+            sj->display();
+        } else {
+            cout << "Subject not found.\n";
+        }
+    } 
+    else if (opt == 2) {
+        string name;
+        cout << "Enter Subject name: ";
+        getline(cin, name);
+
+        bool found = false;
+        subjectList.forEach([&](const Subject& s){
+            if (s.getName() == name) {
+                if (!found) {
+                    cout << "== MATCHING SUBJECTS ==\n";
+                }
+                found = true;
+                s.display();
+                cout << "-----------------------\n";
+            }
+        });
+        if (!found) cout << "No subjects found with that name.\n";
+    } 
+    else {
+        cout << "Invalid option.\n";
+    }
+}
+
 
 void createStudent() {
     int id; string name;
@@ -29,15 +95,6 @@ void createStudent() {
     Student s(id, name);
     studentList.insertAtEnd(s);
     cout << "Student created and added.\n";
-}
-
-void findSubjectByCode(){
-    int code;
-    cout << "Enter Subject Code you are looking for: ";
-    cin >> code;
-    Subject* sj = subjectList.searchById(code);
-    if(sj) sj -> display();
-    else cout << "Subject not found.\n";
 }
 
 void findStudentById() {
@@ -49,16 +106,51 @@ void findStudentById() {
     else    cout << "Student not found.\n";
 }
 
+void findStudent() {
+    int option;
+    cout << "Search by: 1. ID  2. Name\n";
+    cin >> option;
+    cin.ignore();
+
+    if (option == 1) {
+        int id;
+        cout << "Enter student ID: ";
+        cin >> id;
+        Student* st = studentList.searchById(id);
+        if (st) st->display();
+        else    cout << "Student not found.\n";
+    } 
+    else if (option == 2) {
+        string name;
+        cout << "Enter student name: ";
+        getline(cin, name);
+        studentList.searchByName(name);
+    }
+    else {
+        cout << "Invalid option.\n";
+    }
+}
+
 void displayStudents() {
     cout << "All students:\n";
     studentList.displayAll();
+}
+
+void removeStudentById() {
+    int id;
+    cout << "Enter student ID to remove: ";
+    cin >> id;
+    if (studentList.removeById(id)) {
+        cout << "Student removed successfully.\n";
+    } else {
+        cout << "Student not found.\n";
+    }
 }
 
 void displaySubject() {
     cout << "All Subjects: \n";
     subjectList.display();
 }
-
 
 void showMenu() {
     cout << "=== ACADEMIC MANAGEMENT SYSTEM ===" << endl;
@@ -109,11 +201,11 @@ void runMenu() {
         }
         else if (option == 2) {
             cout << "=== FIND STUDENT ===" << endl;
-            findStudentById();
+            findStudent();
         }
         else if (option == 3) {
             cout << "=== REMOVE STUDENT ===" << endl;
-
+            removeStudentById();
         }
         else if (option == 4) {
             cout << "=== CREATE COURSE ===" << endl;
@@ -121,11 +213,11 @@ void runMenu() {
         }
         else if (option == 5) {
             cout << "=== FIND COURSE ===" << endl;
-            findSubjectByCode();
+            findSubject();
         }
         else if (option == 6) {
             cout << "=== REMOVE COURSE ===" << endl;
-            // function to remove course
+            removeSubjectById();
         }
         else if (option == 7) {
             cout << "=== ENROLL STUDENT IN COURSE ===" << endl;
@@ -142,7 +234,6 @@ void runMenu() {
         else if (option == 10) {
             cout << "=== GET ALL STUDENTS ===" << endl;
             displayStudents();
-            break;
         }
         else if (option == 11) {
             cout << "=== GET COURSES FROM STUDENT ===" << endl;

@@ -30,7 +30,16 @@ public:
     bool remove(int id);
     bool exists(int id) const;
     void display() const;
+
+    template <typename Fn>
+    void forEach(Fn fn) {
+        for (Node* cur = head; cur; cur = cur->next) fn(cur->data);
+    }
+
+    template <typename Fn>
+    void forEach(Fn fn) const {
+        for (Node* cur = head; cur; cur = cur->next) fn(cur->data);
+    }
 };
 
 #endif
-
