@@ -10,6 +10,61 @@ LinkedList<Subject> subjectList; // General List of Subjects
 
 using namespace std;
 
+void enrollStudentInCourse() {
+    int studentId, code;
+
+    cout << "Enter student ID: ";
+    cin >> studentId;
+    cin.ignore();
+
+    cout << "Enter Subject code: ";
+    cin >> code;
+    cin.ignore();
+
+    Student* st = studentList.searchById(studentId);
+    if (!st) {
+        cout << "Student not found." << endl;
+        return;
+    }
+    Subject* sj = subjectList.searchById(code);
+    if (!sj) {
+        cout << "Subject not found." << endl;
+        return;
+    }
+
+    if (sj->addStudentOnSubject(*st)) {
+        cout << "Enrollment successful." << endl;
+    } else {
+        cout << "The student is already enrolled in this course." << endl;
+    }
+}
+
+void removeStudentFromCourse() {
+    int studentId, code;
+
+    cout << "Enter student ID: ";
+    cin >> studentId;
+    cin.ignore();
+
+    cout << "Enter Subject code: ";
+    cin >> code;
+    cin.ignore();
+
+    Subject* sj = subjectList.searchById(code);
+    if (!sj) {
+        cout << "Subject not found." << endl;
+        return;
+    }
+
+    if (sj->removeStudentFromSubject(studentId)) {
+        cout << "Student unenrolled successfully." << endl;
+    } else {
+        cout << "The student was not enrolled in this course." << endl;
+    }
+}
+
+
+
 void removeSubjectById() {
     int code;
     cout << "Enter Subject ID (code) to remove: ";
@@ -17,9 +72,9 @@ void removeSubjectById() {
     cin.ignore();
 
     if (subjectList.removeById(code)) {
-        cout << "Subject removed successfully.\n";
+        cout << "Subject removed successfully." << endl;
     } else {
-        cout << "Subject not found.\n";
+        cout << "Subject not found." << endl;
     }
 }
 
@@ -31,7 +86,7 @@ void createSubject(){
     cin.ignore();
 
     if (subjectList.exists(code)) {
-        cout << "Error: A subject with this code already exists.\n";
+        cout << "Error: A subject with this code already exists." << endl;
         return;
     }
 
@@ -40,13 +95,13 @@ void createSubject(){
 
     Subject c(name, code);
     subjectList.insertAtEnd(c);
-    cout << "Subject Created and added.\n";
+    cout << "Subject Created and added." << endl;
 }
 
 
 void findSubject(){
     int opt;
-    cout << "Search subject by: 1) Code  2) Name\n";
+    cout << "Search subject by: 1) Code  2) Name" << endl;
     cin >> opt;
     cin.ignore();
 
@@ -58,10 +113,10 @@ void findSubject(){
 
         Subject* sj = subjectList.searchById(code);
         if (sj) {
-            cout << "== SUBJECT FOUND ==\n";
+            cout << "== SUBJECT FOUND ==" << endl;
             sj->display();
         } else {
-            cout << "Subject not found.\n";
+            cout << "Subject not found." << endl;
         }
     } 
     else if (opt == 2) {
@@ -73,28 +128,40 @@ void findSubject(){
         subjectList.forEach([&](const Subject& s){
             if (s.getName() == name) {
                 if (!found) {
-                    cout << "== MATCHING SUBJECTS ==\n";
+                    cout << "== MATCHING SUBJECTS ==" << endl;
                 }
                 found = true;
                 s.display();
-                cout << "-----------------------\n";
+                cout << "-----------------------" << endl;
             }
         });
-        if (!found) cout << "No subjects found with that name.\n";
+        if (!found) cout << "No subjects found with that name." << endl;
     } 
     else {
-        cout << "Invalid option.\n";
+        cout << "Invalid option." << endl;
     }
 }
 
 
 void createStudent() {
-    int id; string name;
-    cout << "Enter student ID: ";  cin >> id;  cin.ignore();
-    cout << "Enter student name: "; getline(cin, name);
+    int id;
+    string name;
+    cout << "Enter student ID: ";
+    while (!(cin >> id)) {
+        cout << "Invalid ID. Please enter a number: ";
+        cin.clear();
+        cin.ignore();
+        }
+    cin.ignore();
+    cout << "Enter student name: ";
+    getline(cin, name);
+    while (name.empty()) {
+        cout << "Name cannot be empty. Enter student name: ";
+        getline(cin, name);
+        }
     Student s(id, name);
     studentList.insertAtEnd(s);
-    cout << "Student created and added.\n";
+    cout << "Student Created and added." << endl;
 }
 
 void findStudentById() {
@@ -103,12 +170,12 @@ void findStudentById() {
     cin >> id;
     Student* st = studentList.searchById(id);
     if (st) st->display();
-    else    cout << "Student not found.\n";
+    else    cout << "Student not found." << endl;
 }
 
 void findStudent() {
     int option;
-    cout << "Search by: 1. ID  2. Name\n";
+    cout << "Search by: 1. ID  2. Name" << endl;
     cin >> option;
     cin.ignore();
 
@@ -118,7 +185,7 @@ void findStudent() {
         cin >> id;
         Student* st = studentList.searchById(id);
         if (st) st->display();
-        else    cout << "Student not found.\n";
+        else    cout << "Student not found." << endl;
     } 
     else if (option == 2) {
         string name;
@@ -127,12 +194,12 @@ void findStudent() {
         studentList.searchByName(name);
     }
     else {
-        cout << "Invalid option.\n";
+        cout << "Invalid option." << endl;
     }
 }
 
 void displayStudents() {
-    cout << "All students:\n";
+    cout << "All students:" << endl;
     studentList.displayAll();
 }
 
@@ -141,14 +208,14 @@ void removeStudentById() {
     cout << "Enter student ID to remove: ";
     cin >> id;
     if (studentList.removeById(id)) {
-        cout << "Student removed successfully.\n";
+        cout << "Student removed successfully." << endl;
     } else {
-        cout << "Student not found.\n";
+        cout << "Student not found." << endl;
     }
 }
 
 void displaySubject() {
-    cout << "All Subjects: \n";
+    cout << "All Subjects: " << endl;
     subjectList.display();
 }
 
@@ -221,11 +288,11 @@ void runMenu() {
         }
         else if (option == 7) {
             cout << "=== ENROLL STUDENT IN COURSE ===" << endl;
-            // function to enroll student in course
+            enrollStudentInCourse();
         }
         else if (option == 8) {
             cout << "=== REMOVE STUDENT FROM COURSE ===" << endl;
-            // function to remove student from course
+            removeStudentFromCourse();
         }
         else if (option == 9) {
             cout << "=== REGISTER GRADE ===" << endl;
